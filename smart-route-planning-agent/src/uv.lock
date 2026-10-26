@@ -1797,19 +1797,25 @@ name = "smart-route-planning-agent"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "fastapi" },
     { name = "folium" },
     { name = "gpxpy" },
     { name = "gradio" },
+    { name = "httpx" },
     { name = "langgraph" },
+    { name = "uvicorn" },
     { name = "websockets" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "fastapi", specifier = "~=0.141" },
     { name = "folium", specifier = "~=0.14" },
     { name = "gpxpy", specifier = "~=1.6" },
     { name = "gradio", specifier = "~=6.13" },
+    { name = "httpx", specifier = "~=0.28" },
     { name = "langgraph", specifier = "~=1.1" },
+    { name = "uvicorn", specifier = "~=0.52" },
     { name = "websockets", specifier = "~=16.0" },
 ]
 
