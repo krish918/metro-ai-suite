@@ -146,7 +146,7 @@ app = FastAPI(title="Smart Route Planning Agent - Intersections API")
 
 
 @app.get(
-    "/v1/geo/intersections",
+    "/v1/intersections",
     response_model=IntersectionsResponse,
     responses={503: {"model": ErrorResponse}},
 )
