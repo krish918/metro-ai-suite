@@ -67,6 +67,10 @@ services:
       - ovms-models:/home/ovms
     networks:
       - routeplanner
+    ulimits:
+      nofile:
+        soft: 16384
+        hard: 65536
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:8000/v2/health/ready"]
       interval: 15s
