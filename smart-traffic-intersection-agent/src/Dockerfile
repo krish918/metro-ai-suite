@@ -1,7 +1,7 @@
 # Copyright (C) 2025 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
 
-FROM python:3.13-slim
+FROM python:3.13-slim AS builder
 
 # Set working directory
 WORKDIR /app
@@ -11,7 +11,7 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    curl \
+    git \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
@@ -26,7 +26,8 @@ COPY third_party_programs.txt /licenses/third_party_programs.txt
 
 # Optionally download copyleft sources if requested
 ARG COPYLEFT_SOURCES=false
-RUN if [ "$COPYLEFT_SOURCES" = "true" ]; then \
+RUN mkdir -p /copyleft_sources && \
+    if [ "$COPYLEFT_SOURCES" = "true" ]; then \
         apt-get update && \
         # Get list of installed deb packages with copyleft licenses \
         sed -Ei 's/# deb-src /deb-src /' /etc/apt/sources.list && \
@@ -57,6 +58,19 @@ RUN if [ "$COPYLEFT_SOURCES" = "true" ]; then \
         apt-get remove --purge -y gcc build-essential libffi-dev python3-dev; \
     fi
 
+FROM python:3.13-slim AS runtime
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app /app
+COPY --from=builder /licenses /licenses
+COPY --from=builder /copyleft_sources /copyleft_sources
+
 # Remove the base image's system-wide pip/setuptools installation. The
 # application runs entirely from the uv-managed virtual environment at
 # /app/.venv (which has its own patched setuptools/msgpack), and pip is only
@@ -86,7 +100,7 @@ EXPOSE 8081 7860
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 --start-period=10s \
-    CMD curl -f http://localhost:8081/health || exit 1
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8081/health', timeout=5).close()"]
 
 # Run both API and UI services using entrypoint script
 CMD ["bash", "docker-entrypoint.sh"]

@@ -1,10 +1,11 @@
 # Copyright (C) 2026 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
 
-FROM python:3.12-slim
+FROM python:3.12-slim AS builder
 
-ARG USER_ID=1000
-ARG USER_GROUP_ID=1000
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends git ca-certificates && \
+  rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
@@ -14,7 +15,15 @@ RUN pip install --no-cache-dir "uv>=0.9.22,<1.0.0"
 COPY . .
 RUN uv sync --frozen --no-install-project
 
-# Upgrade pip and install dependencies directly from pyproject.toml
+FROM python:3.12-slim AS runtime
+
+ARG USER_ID=1000
+ARG USER_GROUP_ID=1000
+
+WORKDIR /app
+
+COPY --from=builder /usr/local/bin/uv /usr/local/bin/uv
+COPY --from=builder /app /app
 
 # Create non-root user and change ownership
 RUN groupadd -g ${USER_GROUP_ID} routeuser && \
