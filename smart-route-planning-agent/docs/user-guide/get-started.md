@@ -29,20 +29,21 @@ platform, see [Docker Documentation](https://docs.docker.com/) for an introducti
 
     Edit `src/data/config.json` to add the IP addresses and ports of the edge nodes where Smart Traffic Intersection Agents are running.
 
-    ### Example Configuration
+    ### Example Configuration for calling 3 _Smart Traffic Intersection Agents_ instances
 
     ```json
     {
         "api_endpoint": "/api/v1/traffic/current/ws?images=false",
+        "http_api_endpoint": "/api/v1/traffic/current?images=false",
         "api_hosts": [
             {
-                "host": "ws://<node-1-ip>:<port>"
+                "host": "<node_1_IP>:<port>"
             },
             {
-                "host": "ws://<node-2-ip>:<port>"
+                "host": "<node_2_IP>:<port>"
             },
             {
-                "host": "ws://<node-3-ip>:<port>"
+                "host": "<node_3_IP>:<port>"
             }
         ]
     }

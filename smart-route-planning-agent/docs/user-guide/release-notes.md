@@ -1,5 +1,26 @@
 # Release Notes: Smart Route Planning Agent
 
+## Version 2026.3.0-rc1
+
+**New**:
+
+- Added reasoning-based route planning using a configurable language model served by OpenVINO Model Server (OVMS), with deployment support in Docker Compose and Helm.
+- Added structured model responses and route validation, with automatic fallback to rule-based planning when the model is unavailable, times out, or returns an invalid decision.
+- Added Intel CPU, GPU, and NPU hardware information to the UI through Metrics Manager in Docker Compose deployments.
+
+**Improved**:
+
+- Updated dependencies to address reported vulnerabilities and raised the minimum supported Python version to 3.11.
+- Pinned Gradio to a specific source commit and introduced multi-stage Docker builds that compile and package its frontend assets.
+- Added configurable reasoning request timeouts and OVMS KV-cache sizing, with persistent model caching in Docker Compose and optional persistence in Helm.
+- Updated documentation links and sparse-checkout instructions for the Metro AI Suite repository.
+
+**Upgrade Notes**:
+
+- Python 3.10 is no longer supported. Use Python 3.11 or later for source environments; the application container continues to use Python 3.12.
+- Update `api_hosts` entries in `src/data/config.json` to use `host:port` without the `ws://` prefix.
+- To enable reasoning-based planning, set `REASONING_MODEL_NAME` for Docker Compose or `reasoning.modelName` for Helm.
+
 ## Version 2026.2.0
 
 **Release Date**: September 10, 2026
