@@ -23,13 +23,13 @@ platform, see [Docker Documentation](https://docs.docker.com/) for an introducti
    cd smart-route-planning-agent
    ```
 
-2. **Configure _Smart Traffic Intersection Agent_ Node Endpoints :**
+2. **Configure _Smart Traffic Intersection Agent_ node endpoints :**
 
     In order to plan routes, **Smart Route Planning Agent** needs **_Smart Traffic Intersection Agents_** running on pre-defined nodes. See [this](#multi-node-stack-for-smart-route-planning-agent) to learn more.
 
-    Edit `src/data/config.json` to add the IP addresses and ports of the edge nodes where Smart Traffic Intersection Agents are running.
+    Edit `src/data/config.json` to add the IP addresses and ports of the edge nodes where Smart Traffic Intersection Agents are running. You can add multiple _Smart Traffic Intersection Agent_ nodes.
 
-    ### Example Configuration for calling 3 _Smart Traffic Intersection Agents_ instances
+    ### Example configuration for adding three **Smart Traffic Intersection Agent** instances
 
     ```json
     {
