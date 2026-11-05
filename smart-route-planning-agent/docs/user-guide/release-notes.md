@@ -2,6 +2,8 @@
 
 ## Version 2026.3.0-rc1
 
+**Release Date**: November, 2026
+
 **New**:
 
 - Added reasoning-based route planning using a configurable language model served by OpenVINO Model Server (OVMS), with deployment support in Docker Compose.
@@ -13,6 +15,7 @@
 - Updated dependencies to address reported vulnerabilities and raised the minimum supported Python version to 3.11.
 - Pinned Gradio to a specific source commit and introduced multi-stage Docker builds that compile and package its frontend assets.
 - Added configurable reasoning request timeouts and OVMS KV-cache sizing, with persistent model caching in Docker Compose.
+- Updated the Docker Compose OVMS image to `2026.4.0` and increased the default reasoning timeout to 120 seconds to accommodate CPU inference with the documented Qwen models.
 - Updated documentation links and sparse-checkout instructions for the Metro AI Suite repository.
 
 **Deprecated**:
