@@ -4,7 +4,7 @@
 
 **New**:
 
-- Added reasoning-based route planning using a configurable language model served by OpenVINO Model Server (OVMS), with deployment support in Docker Compose and Helm.
+- Added reasoning-based route planning using a configurable language model served by OpenVINO Model Server (OVMS), with deployment support in Docker Compose.
 - Added structured model responses and route validation, with automatic fallback to rule-based planning when the model is unavailable, times out, or returns an invalid decision.
 - Added Intel CPU, GPU, and NPU hardware information to the UI through Metrics Manager in Docker Compose deployments.
 
@@ -12,14 +12,18 @@
 
 - Updated dependencies to address reported vulnerabilities and raised the minimum supported Python version to 3.11.
 - Pinned Gradio to a specific source commit and introduced multi-stage Docker builds that compile and package its frontend assets.
-- Added configurable reasoning request timeouts and OVMS KV-cache sizing, with persistent model caching in Docker Compose and optional persistence in Helm.
+- Added configurable reasoning request timeouts and OVMS KV-cache sizing, with persistent model caching in Docker Compose.
 - Updated documentation links and sparse-checkout instructions for the Metro AI Suite repository.
+
+**Deprecated**:
+
+- Helm chart deployment is deprecated starting with this release. Use Docker Compose for new deployments and plan to migrate existing Helm deployments to Docker Compose.
 
 **Upgrade Notes**:
 
 - Python 3.10 is no longer supported. Use Python 3.11 or later for source environments; the application container continues to use Python 3.12.
 - Update `api_hosts` entries in `src/data/config.json` to use `host:port` without the `ws://` prefix.
-- To enable reasoning-based planning, set `REASONING_MODEL_NAME` for Docker Compose or `reasoning.modelName` for Helm.
+- To enable reasoning-based planning in Docker Compose, set `REASONING_MODEL_NAME`.
 
 ## Version 2026.2.0
 
